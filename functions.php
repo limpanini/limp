@@ -6,6 +6,7 @@
  *
  * @package Limp
  */
+require "inc/wp-bootstrap-navwalker.php";
 
 if ( ! function_exists( 'limp_setup' ) ) :
 /**
@@ -93,13 +94,61 @@ function limp_widgets_init() {
 		'name'          => esc_html__( 'Sidebar', 'limp' ),
 		'id'            => 'sidebar-1',
 		'description'   => esc_html__( 'Add widgets here.', 'limp' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</section>',
+		'before_widget' => '<li id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</li>',
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
 	) );
 }
 add_action( 'widgets_init', 'limp_widgets_init' );
+
+
+/**
+ * Enqueue scripts and styles.
+ */
+/*function limp_scripts() {
+	wp_enqueue_style( 'limp-style', get_stylesheet_uri() );
+
+	wp_enqueue_script( 'limp-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
+
+	wp_enqueue_script( 'limp-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'limp_scripts' );
+*/
+/**
+ * Implement the Custom Header feature.
+ */
+/*require get_template_directory() . '/inc/custom-header.php';
+*/
+/**
+ * Custom template tags for this theme.
+ */
+/*require get_template_directory() . '/inc/template-tags.php';
+*/
+/**
+ * Custom functions that act independently of the theme templates.
+ */
+/*require get_template_directory() . '/inc/extras.php';
+*/
+/**
+ * Customizer additions.
+ */
+/*require get_template_directory() . '/inc/customizer.php';
+*/
+/**
+ * Load Jetpack compatibility file.
+ */
+/*require get_template_directory() . '/inc/jetpack.php';
+*/
+
+
+
+
+
 
 /**
  * Enqueue scripts and styles.
@@ -107,9 +156,15 @@ add_action( 'widgets_init', 'limp_widgets_init' );
 function limp_scripts() {
 	wp_enqueue_style( 'limp-style', get_stylesheet_uri() );
 
-	wp_enqueue_script( 'limp-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
+	// Load jquery
+	wp_deregister_script('jquery');
+	wp_enqueue_script( 'jquery', get_template_directory_uri() . '/inc/jquery-3.2.0/jquery-3.2.0.min.js', array(), '3.2.0', true );
 
-	wp_enqueue_script( 'limp-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+	// Load Tether
+	wp_enqueue_script( 'tether', get_template_directory_uri() . '/inc/tether/tether.min.js', array('jquery'), '', true );
+
+	// Load bootstrap scripts
+	wp_enqueue_script( 'bootstrap4', get_template_directory_uri() . '/inc/bootstrap-4.0.0-alpha.6/dist/js/bootstrap.min.js', array('jquery', 'tether'), '4.0.0-alpha.6', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );

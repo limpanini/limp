@@ -24,3 +24,4 @@ function limp_customize_preview_js() {
 	wp_enqueue_script( 'limp_customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), '20151215', true );
 }
 add_action( 'customize_preview_init', 'limp_customize_preview_js' );
+
